@@ -1,29 +1,80 @@
 import Link from 'next/link'
+import { ReactNode } from 'react'
 
-export function ExperienceCard() {
+import { cn } from '@/lib/utils'
+
+type ExperienceCardGenericProps<T = unknown> = {
+  className?: string
+  children: ReactNode
+} & T
+
+export function ExperienceCard({
+  className,
+  children,
+}: ExperienceCardGenericProps) {
   return (
-    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-sm">
-      <p className="min-w-fit text-muted-foreground">March, 2023 - Present</p>
-      <div>
-        <p className="font-medium">
-          <Link
-            href="https://supportsistemas.com.br/"
-            target="_blank"
-            className="hover:font-bold underline underline-offset-4 transition-all"
-          >
-            SUPPORT
-          </Link>{' '}
-          | UI/UX Designer
-        </p>
-        <p className="mt-2">
-          Develop and improve screen layouts for the company&apos;s projects and
-          programs, ensuring compliance with established standards and focusing
-          on optimizing the end-user experience and interface. I intend to
-          utilize my skills in design and usability to create intuitive and
-          efficient interfaces that meet the needs of users and contribute to
-          the success of the company&apos;s products.
-        </p>
-      </div>
+    <div
+      className={cn(
+        'flex flex-col sm:flex-row gap-2 sm:gap-4 text-sm',
+        className,
+      )}
+    >
+      {children}
     </div>
   )
+}
+
+export function ExperienceDate({
+  className,
+  children,
+}: ExperienceCardGenericProps) {
+  return (
+    <p className={cn('min-w-fit text-muted-foreground', className)}>
+      {children}
+    </p>
+  )
+}
+
+export function ExperienceCardContent({
+  className,
+  children,
+}: ExperienceCardGenericProps) {
+  return <div className={cn('', className)}>{children}</div>
+}
+
+interface ExperienceWorkProps {
+  path: string
+}
+
+export function ExperienceWork({
+  className,
+  children,
+}: ExperienceCardGenericProps) {
+  return <p className={cn('font-medium', className)}>{children}</p>
+}
+
+export function ExperienceWorkLink({
+  path,
+  className,
+  children,
+}: ExperienceCardGenericProps<ExperienceWorkProps>) {
+  return (
+    <Link
+      href={path}
+      target="_blank"
+      className={cn(
+        'hover:font-bold underline underline-offset-4 transition-all',
+        className,
+      )}
+    >
+      {children}
+    </Link>
+  )
+}
+
+export function ExperienceWorkDescription({
+  className,
+  children,
+}: ExperienceCardGenericProps) {
+  return <p className={cn('mt-2', className)}>{children}</p>
 }
